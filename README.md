@@ -52,4 +52,4 @@ Or just use it as inspiration and build something completely different. The poin
 
 ## License
 
-MIT
+MIT -- free to use, modify, and redistribute, including in commercial projects. No permission needed, no strings attached. See [LICENSE](LICENSE) for the full text.
