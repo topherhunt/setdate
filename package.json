@@ -29,11 +29,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "electron": "^42.1.0",
     "exiftool-vendored": "^35.20.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
+    "electron": "^42.1.0",
     "electron-builder": "^26.8.1"
   }
 }
