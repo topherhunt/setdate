@@ -1,0 +1,39 @@
+{
+  "name": "setdate",
+  "version": "1.0.0",
+  "description": "Batch update creation datetimes on images",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --mac dmg",
+    "test": "npx playwright test"
+  },
+  "build": {
+    "appId": "com.setdate.app",
+    "productName": "SetDate",
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.photography",
+      "identity": null
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**",
+      "lib/**"
+    ],
+    "asarUnpack": [
+      "node_modules/exiftool-vendored.*/**"
+    ]
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^42.1.0",
+    "exiftool-vendored": "^35.20.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "electron-builder": "^26.8.1"
+  }
+}

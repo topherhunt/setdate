@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SetDate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div id="drop-zone" class="drop-zone">
+      <div id="drop-prompt" class="drop-prompt">
+        <p class="drop-title">Drop images or folders here</p>
+        <p class="drop-subtitle">JPG, PNG, TIFF, HEIC, RAW formats</p>
+      </div>
+      <div id="drop-summary" class="drop-summary hidden">
+        <p id="file-count" class="file-count"></p>
+        <p id="date-range" class="date-range"></p>
+        <button id="clear-btn" class="clear-btn">Clear</button>
+      </div>
+    </div>
+
+    <div id="controls" class="controls hidden">
+      <div class="mode-toggle">
+        <label class="mode-label">
+          <input type="radio" name="mode" value="absolute" checked>
+          Set to date
+        </label>
+        <label class="mode-label">
+          <input type="radio" name="mode" value="offset">
+          Shift by offset
+        </label>
+      </div>
+
+      <div id="absolute-panel" class="panel">
+        <label for="datetime-input">New date &amp; time</label>
+        <input type="datetime-local" id="datetime-input" step="1">
+      </div>
+
+      <div id="offset-panel" class="panel hidden">
+        <div class="offset-row">
+          <select id="offset-dir">
+            <option value="+">+ (forward)</option>
+            <option value="-">- (backward)</option>
+          </select>
+        </div>
+        <div class="offset-row">
+          <label><input type="number" id="offset-years" min="0" value="0" class="offset-input"> years</label>
+          <label><input type="number" id="offset-months" min="0" value="0" class="offset-input"> months</label>
+          <label><input type="number" id="offset-days" min="0" value="0" class="offset-input"> days</label>
+        </div>
+        <div class="offset-row">
+          <label><input type="number" id="offset-hours" min="0" value="0" class="offset-input"> hours</label>
+          <label><input type="number" id="offset-minutes" min="0" value="0" class="offset-input"> minutes</label>
+          <label><input type="number" id="offset-seconds" min="0" value="0" class="offset-input"> seconds</label>
+        </div>
+      </div>
+
+      <button id="apply-btn" class="apply-btn">Apply</button>
+    </div>
+
+    <div id="status" class="status"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
