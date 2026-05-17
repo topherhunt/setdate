@@ -6,6 +6,8 @@ Sets all three EXIF date fields (DateTimeOriginal, CreateDate, ModifyDate) plus 
 
 Supports JPG, PNG, TIFF, HEIC, WebP, and common RAW formats.
 
+![SetDate preview](docs/preview.png)
+
 ## Install
 
 Download the latest `.dmg` from [Releases](https://github.com/topherhunt/setdate/releases). On first launch, macOS will block it since it's unsigned -- right-click > Open to bypass, or run:
