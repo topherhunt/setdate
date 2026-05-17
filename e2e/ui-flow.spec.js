@@ -27,22 +27,13 @@ test.afterAll(async () => {
 test('full absolute date flow via UI', async () => {
   const testFile = createTestJpeg(tmpDir, 'ui-abs.jpg');
 
-  // Simulate what happens after drop: call scanFiles, then update UI like app.js does
+  // Call the app's own handleDrop function rather than reimplementing it
   await page.evaluate(async (p) => {
-    const result = await window.api.scanFiles([p]);
-    // Replicate the handleDrop logic
-    document.getElementById('file-count').textContent =
-      result.count + ' image' + (result.count === 1 ? '' : 's');
-    document.getElementById('date-range').textContent = 'No existing date metadata found';
-    document.getElementById('drop-prompt').classList.add('hidden');
-    document.getElementById('drop-summary').classList.remove('hidden');
-    document.getElementById('drop-zone').classList.add('has-files');
-    document.getElementById('controls').classList.remove('hidden');
-    // Store paths globally so the apply button can find them
-    window.__testPaths = result.paths;
+    await handleDrop([p]);
+    window.__testPaths = currentPaths;
   }, testFile);
 
-  await expect(page.locator('#file-count')).toContainText('1 image');
+  await expect(page.locator('#file-count')).toContainText('1 image selected');
   await expect(page.locator('#controls')).toBeVisible();
   await expect(page.locator('#apply-btn')).toBeVisible();
 
@@ -128,7 +119,7 @@ test('clear button resets UI', async () => {
   await expect(page.locator('#controls')).toBeHidden();
 });
 
-test('date range display shows min and max', async () => {
+test('date range display shows min and max with arrow', async () => {
   const file1 = createTestJpeg(tmpDir, 'range-a.jpg');
   const file2 = createTestJpeg(tmpDir, 'range-b.jpg');
 
@@ -144,24 +135,81 @@ test('date range display shows min and max', async () => {
     return window.api.applyAbsolute({ paths, datetime });
   }, { paths: scan2.paths, datetime: '2023:04:20 16:00:00' });
 
-  // Now scan both files together
-  const combined = await page.evaluate(async (paths) => {
-    return window.api.scanFiles(paths);
+  // Load both files through handleDrop so the UI renders
+  await page.evaluate(async (paths) => {
+    await handleDrop(paths);
   }, [file1, file2]);
 
-  expect(combined.count).toBe(2);
-  expect(combined.minDate).toContain('2017-01-15');
-  expect(combined.maxDate).toContain('2023-04-20');
+  const rangeText = await page.locator('#date-range-value').textContent();
+  expect(rangeText).toContain('Jan');
+  expect(rangeText).toContain('2017');
+  expect(rangeText).toContain('to');
+  expect(rangeText).toContain('Apr');
+  expect(rangeText).toContain('2023');
+});
+
+test('offset preview updates live as user types', async () => {
+  const testFile = createTestJpeg(tmpDir, 'preview-test.jpg');
+
+  // Set a known date
+  const scan = await page.evaluate(async (p) => window.api.scanFiles([p]), testFile);
+  await page.evaluate(async ({ paths, datetime }) => {
+    return window.api.applyAbsolute({ paths, datetime });
+  }, { paths: scan.paths, datetime: '2020:06:01 10:00:00' });
+
+  // Load through handleDrop
+  await page.evaluate(async (p) => {
+    await handleDrop([p]);
+  }, testFile);
+
+  // Switch to offset mode, reset offset fields
+  await page.evaluate(() => {
+    document.querySelector('input[value="offset"]').checked = true;
+    document.querySelector('input[value="absolute"]').checked = false;
+    document.getElementById('absolute-panel').classList.add('hidden');
+    document.getElementById('offset-panel').classList.remove('hidden');
+    document.getElementById('offset-years').value = '0';
+    document.getElementById('offset-months').value = '0';
+    document.getElementById('offset-days').value = '0';
+    document.getElementById('offset-hours').value = '0';
+    document.getElementById('offset-minutes').value = '0';
+    document.getElementById('offset-seconds').value = '0';
+    updateOffsetPreview();
+  });
+
+  // Preview should be hidden when offset is zero
+  await expect(page.locator('#offset-preview')).toBeHidden();
+
+  // Set offset of +5 days and trigger preview
+  await page.evaluate(() => {
+    document.getElementById('offset-days').value = '5';
+    updateOffsetPreview();
+  });
+
+  await expect(page.locator('#offset-preview')).toBeVisible();
+  const previewText = await page.locator('#offset-preview-value').textContent();
+  expect(previewText).toContain('Jun');
+  expect(previewText).toContain('2020');
+});
+
+test('offset preview hides when switching back to absolute mode', async () => {
+  // From prior test state, offset preview should be visible
+  // Switch to absolute mode
+  await page.evaluate(() => {
+    document.querySelector('input[value="absolute"]').checked = true;
+    document.querySelector('input[value="offset"]').checked = false;
+    document.getElementById('absolute-panel').classList.remove('hidden');
+    document.getElementById('offset-panel').classList.add('hidden');
+    updateOffsetPreview();
+  });
+
+  await expect(page.locator('#offset-preview')).toBeHidden();
 });
 
 test('applying to empty file list is prevented', async () => {
-  // Clear state
   await page.evaluate(() => {
-    document.getElementById('drop-prompt').classList.remove('hidden');
-    document.getElementById('drop-summary').classList.add('hidden');
-    document.getElementById('controls').classList.add('hidden');
+    clearFiles();
   });
 
-  // Apply button should be hidden since controls are hidden
   await expect(page.locator('#controls')).toBeHidden();
 });

@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #f5f5f7;
@@ -16,6 +20,9 @@ body {
 .container {
   max-width: 540px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .drop-zone {
@@ -25,7 +32,11 @@ body {
   text-align: center;
   background: #fff;
   transition: border-color 0.15s, background 0.15s;
-  cursor: default;
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .drop-zone.dragover {
@@ -55,9 +66,33 @@ body {
 }
 
 .drop-summary .date-range {
-  font-size: 13px;
-  color: #555;
-  margin-top: 4px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.date-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #86868b;
+  margin-bottom: 2px;
+}
+
+.date-value {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1d1d1f;
+}
+
+.date-separator {
+  color: #86868b;
+  font-weight: 400;
+}
+
+#offset-preview .date-value {
+  color: #007aff;
 }
 
 .clear-btn {

@@ -11,11 +11,18 @@
     <div id="drop-zone" class="drop-zone">
       <div id="drop-prompt" class="drop-prompt">
         <p class="drop-title">Drop images or folders here</p>
-        <p class="drop-subtitle">JPG, PNG, TIFF, HEIC, RAW formats</p>
+        <p class="drop-subtitle">or click to browse -- JPG, PNG, TIFF, HEIC, RAW</p>
       </div>
       <div id="drop-summary" class="drop-summary hidden">
         <p id="file-count" class="file-count"></p>
-        <p id="date-range" class="date-range"></p>
+        <div id="date-range" class="date-range">
+          <span class="date-label">Current dates</span>
+          <span id="date-range-value" class="date-value"></span>
+        </div>
+        <div id="offset-preview" class="date-range hidden">
+          <span class="date-label">After offset</span>
+          <span id="offset-preview-value" class="date-value"></span>
+        </div>
         <button id="clear-btn" class="clear-btn">Clear</button>
       </div>
     </div>

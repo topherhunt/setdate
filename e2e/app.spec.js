@@ -42,8 +42,8 @@ test('scan files via IPC shows summary', async () => {
 
   await page.evaluate(async (p) => {
     const res = await window.api.scanFiles([p]);
-    document.getElementById('file-count').textContent = res.count + ' image' + (res.count === 1 ? '' : 's');
-    document.getElementById('date-range').textContent = 'No existing date metadata found';
+    document.getElementById('file-count').textContent = res.count + ' image' + (res.count === 1 ? '' : 's') + ' selected';
+    document.getElementById('date-range').textContent = 'Current date: ' + new Date(res.minDate).toLocaleDateString();
     document.getElementById('drop-prompt').classList.add('hidden');
     document.getElementById('drop-summary').classList.remove('hidden');
     document.getElementById('drop-zone').classList.add('has-files');
@@ -51,7 +51,7 @@ test('scan files via IPC shows summary', async () => {
   }, testImage);
 
   const fileCount = page.locator('#file-count');
-  await expect(fileCount).toContainText('1 image');
+  await expect(fileCount).toContainText('1 image selected');
 
   fs.rmSync(tmpDir, { recursive: true, force: true });
 });

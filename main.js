@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const exif = require('./lib/exif');
 
@@ -18,6 +18,17 @@ function createWindow() {
   });
   mainWindow.loadFile(path.join(__dirname, 'renderer', 'index.html'));
 }
+
+ipcMain.handle('pick-files', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openFile', 'openDirectory', 'multiSelections'],
+    filters: [
+      { name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'tiff', 'tif', 'heic', 'heif', 'webp', 'arw', 'cr2', 'cr3', 'nef', 'dng', 'orf', 'raf', 'rw2'] },
+    ],
+  });
+  if (result.canceled) return null;
+  return result.filePaths;
+});
 
 ipcMain.handle('scan-files', async (_event, rawPaths) => {
   const paths = exif.resolveFiles(rawPaths);
