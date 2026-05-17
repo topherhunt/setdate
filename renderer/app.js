@@ -13,6 +13,16 @@ const applyBtn = document.getElementById('apply-btn');
 const statusEl = document.getElementById('status');
 const datetimeInput = document.getElementById('datetime-input');
 
+const aboutLink = document.getElementById('about-link');
+const aboutModal = document.getElementById('about-modal');
+const aboutClose = document.getElementById('about-close');
+
+aboutLink.addEventListener('click', () => aboutModal.classList.remove('hidden'));
+aboutClose.addEventListener('click', () => aboutModal.classList.add('hidden'));
+aboutModal.addEventListener('click', (e) => {
+  if (e.target === aboutModal) aboutModal.classList.add('hidden');
+});
+
 let currentPaths = [];
 let currentMinDate = null;
 let currentMaxDate = null;

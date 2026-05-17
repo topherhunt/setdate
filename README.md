@@ -1,3 +1,46 @@
+# SetDate
+
+A simple macOS app for batch-updating creation dates on images. Drag in files or a folder, pick a new date (or shift by an offset), and hit Apply.
+
+Sets all three EXIF date fields (DateTimeOriginal, CreateDate, ModifyDate) plus the macOS filesystem creation date, so Finder, Photos, and every other app agree.
+
+Supports JPG, PNG, TIFF, HEIC, WebP, and common RAW formats.
+
+## Install
+
+Download the latest `.dmg` from [Releases](#). On first launch, macOS will block it since it's unsigned -- right-click > Open to bypass, or run:
+
+```
+xattr -cr /Applications/SetDate.app
+```
+
+## Development
+
+```
+npm install
+npm start
+```
+
+## Tests
+
+```
+npm test
+```
+
+## Build
+
+```
+npm run dist
+```
+
+Produces `dist/SetDate-<version>-arm64.dmg`.
+
+## License
+
+MIT
+
+---
+
 ## Prompts I used
 
 *(Sorry -- I dictate using [Handy](handy.computer) so my prompts are rambly. I didn't have time to make them shorter 🤷‍♀️ and Claude doesn't mind the length.)*
