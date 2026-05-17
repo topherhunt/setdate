@@ -119,6 +119,16 @@ body {
   color: var(--text-muted);
 }
 
+.about-github {
+  color: var(--accent);
+  text-decoration: none;
+  font-style: normal;
+}
+
+.about-github:hover {
+  text-decoration: underline;
+}
+
 .about-close {
   margin-top: 16px;
   width: 100%;
