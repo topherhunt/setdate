@@ -1,6 +1,6 @@
 {
   "name": "setdate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Batch update creation datetimes on images",
   "main": "main.js",
   "scripts": {
