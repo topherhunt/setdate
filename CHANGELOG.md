@@ -33,4 +33,4 @@ Initial release.
 - Dark mode support.
 
 [1.1.0]: https://github.com/topherhunt/setdate/releases/tag/v1.1.0
-[1.0.0]: https://github.com/topherhunt/setdate/commit/790e136
+[1.0.0]: https://github.com/topherhunt/setdate/releases/tag/v1.0.0
