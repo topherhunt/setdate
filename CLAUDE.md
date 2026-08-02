@@ -34,6 +34,10 @@ There's no good free open-source tool for this. Existing options are paid, overl
 
 **Packaging**: `electron-builder --mac dmg`, `asarUnpack` for exiftool binary, `identity: null` (unsigned).
 
+`scripts/after-pack.js` re-signs the macOS bundle ad-hoc and then verifies it. This is load-bearing, not cleanup: electron-builder skips signing entirely when `identity: null`, so the app would otherwise ship carrying the ad-hoc signature Electron's linker baked into the prebuilt binaries -- stale, because packaging renames the helper apps and rewrites Info.plist afterward. macOS reads that mismatch as tampering and reports the app as "damaged, move it to the Trash", with no Open Anyway button. `e2e/packaged.spec.js` guards it.
+
+**Releasing**: push a `v*` tag; `.github/workflows/release.yml` builds macOS (arm64 + x64) and Windows and opens a draft Release.
+
 **Testing**: Headless via `SETDATE_HEADLESS=1`. Test JPEGs created at runtime via Python PIL. Tests verify actual EXIF round-trips. `npm test` runs everything.
 
 ## Code style

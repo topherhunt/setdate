@@ -1,6 +1,6 @@
 # SetDate
 
-A simple macOS app for batch-updating creation dates on images. Drag in files or a folder, pick a new date (or shift by an offset), and hit Apply.
+A simple macOS tool for batch-updating creation dates on images. Drag in files or a folder, pick a new date (or shift by an offset), and hit Apply.
 
 Sets all three EXIF date fields (DateTimeOriginal, CreateDate, ModifyDate) plus the macOS filesystem creation date, so Finder, Photos, and every other app agree.
 
@@ -10,11 +10,15 @@ Supports JPG, PNG, TIFF, HEIC, WebP, and common RAW formats.
 
 ## Install
 
-Download the latest `.dmg` from [Releases](https://github.com/topherhunt/setdate/releases). On first launch, macOS will block it since it's unsigned -- right-click > Open to bypass, or run:
+1. Download the latest `.dmg` from [Releases](https://github.com/topherhunt/setdate/releases).
+2. Open the `.dmg` and drag **SetDate** into your Applications folder.
+3. **First launch only:** right-click (or Control-click) SetDate in Applications and choose **Open**, then click **Open** in the dialog that appears. After that, it opens normally on a double-click.
 
-```
-xattr -cr /Applications/SetDate.app
-```
+That extra step exists because SetDate isn't notarized -- notarization requires a paid Apple Developer account, and this is a free app. macOS shows an "unidentified developer" warning for any app in that position.
+
+If macOS instead tells you the app is **damaged and should be moved to the Trash**, you have an old build with a broken code signature. Download the latest release, which fixes it.
+
+A Windows installer (`.exe`) is also published with each release. macOS is the primary target and gets the most testing.
 
 ## Development
 
@@ -32,10 +36,23 @@ npm test
 ## Build
 
 ```
-npm run dist
+npm run dist       # .dmg for the current Mac's architecture
+npm run dist:mac   # .dmg for both Apple Silicon and Intel
+npm run dist:win   # Windows .exe installer (run on Windows)
 ```
 
-Produces `dist/SetDate-<version>-arm64.dmg`.
+Output lands in `dist/`. macOS builds are re-signed ad-hoc by `scripts/after-pack.js`, which then verifies the signature and fails the build if it doesn't match the bundle -- without that, macOS reports the app as damaged.
+
+## Releasing
+
+Push a version tag to build both platforms and open a draft GitHub Release:
+
+```
+npm version minor      # bumps package.json and creates the tag
+git push && git push --tags
+```
+
+Review and smoke-test the attached artifacts, then publish the draft. See [.github/workflows/release.yml](.github/workflows/release.yml).
 
 ## Make your own
 

@@ -5,16 +5,22 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --mac dmg",
+    "dist": "electron-builder --mac dmg --publish never",
+    "dist:mac": "electron-builder --mac dmg --arm64 --x64 --publish never",
+    "dist:win": "electron-builder --win nsis --x64 --publish never",
     "test": "npx playwright test"
   },
   "build": {
     "appId": "com.setdate.app",
     "productName": "SetDate",
+    "afterPack": "./scripts/after-pack.js",
     "mac": {
       "target": "dmg",
       "category": "public.app-category.photography",
       "identity": null
+    },
+    "win": {
+      "target": "nsis"
     },
     "files": [
       "main.js",
