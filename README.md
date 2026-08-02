@@ -10,7 +10,7 @@ Supports JPG, PNG, TIFF, HEIC, WebP, and common RAW formats.
 
 ## Install
 
-1. Download the latest `.dmg` from [Releases](https://github.com/topherhunt/setdate/releases).
+1. Download the latest `.dmg` from [Releases](https://github.com/topherhunt/setdate/releases) -- `Apple-Silicon` for M-series Macs, `Intel` for older ones. (Apple menu > About This Mac will tell you which you have.)
 2. Open the `.dmg` and drag **SetDate** into your Applications folder.
 3. **First launch only:** right-click (or Control-click) SetDate in Applications and choose **Open**, then click **Open** in the dialog that appears. After that, it opens normally on a double-click.
 
@@ -36,10 +36,12 @@ npm test
 ## Build
 
 ```
-npm run dist       # .dmg for the current Mac's architecture
-npm run dist:mac   # .dmg for both Apple Silicon and Intel
+npm run dist       # Apple Silicon .dmg only -- the quick local build
+npm run dist:mac   # both .dmgs, as the release workflow builds them
 npm run dist:win   # Windows .exe installer (run on Windows)
 ```
+
+The two macOS builds run as separate electron-builder invocations so each can name its own artifact (`SetDate-<version>-Apple-Silicon.dmg` / `-Intel.dmg`). electron-builder's `${arch}` macro only expands to `arm64`/`x64`, and it omits the suffix entirely for x64, which left the Intel build looking like the default download.
 
 Output lands in `dist/`. macOS builds are re-signed ad-hoc by `scripts/after-pack.js`, which then verifies the signature and fails the build if it doesn't match the bundle -- without that, macOS reports the app as damaged.
 

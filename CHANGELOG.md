@@ -2,6 +2,12 @@
 
 All notable changes to SetDate are documented here. Versions follow [semantic versioning](https://semver.org/).
 
+## Unreleased
+
+### Changed
+
+- macOS downloads are now named `SetDate-<version>-Apple-Silicon.dmg` and `SetDate-<version>-Intel.dmg`. Previously the Intel build was just `SetDate-<version>.dmg`, with no architecture in the name at all, so it read as the default choice for everyone -- an easy way to end up running the Intel build under Rosetta on an M-series Mac.
+
 ## [1.1.0] -- 2026-08-02
 
 ### Fixed
