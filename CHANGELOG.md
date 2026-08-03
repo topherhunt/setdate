@@ -2,7 +2,7 @@
 
 All notable changes to SetDate are documented here. Versions follow [semantic versioning](https://semver.org/).
 
-## Unreleased
+## [1.1.1] -- 2026-08-03
 
 ### Added
 
@@ -42,5 +42,6 @@ Initial release.
 - Supports JPG, PNG, TIFF, HEIC, WebP, and common RAW formats.
 - Dark mode support.
 
+[1.1.1]: https://github.com/topherhunt/setdate/releases/tag/v1.1.1
 [1.1.0]: https://github.com/topherhunt/setdate/releases/tag/v1.1.0
 [1.0.0]: https://github.com/topherhunt/setdate/releases/tag/v1.0.0
