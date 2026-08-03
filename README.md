@@ -10,7 +10,7 @@ Supports JPG, PNG, TIFF, HEIC, WebP, and common RAW formats.
 
 ## Install
 
-1. Download the latest `.dmg` from [Releases](https://github.com/topherhunt/setdate/releases) -- `Apple-Silicon` for M-series Macs, `Intel` for older ones. (Apple menu > About This Mac will tell you which you have.)
+1. Download the latest `.dmg` from [Releases](https://github.com/topherhunt/setdate/releases) -- `apple-silicon` for M-series Macs, `apple-intel` for older ones. (Apple menu > About This Mac will tell you which you have.)
 2. Open the `.dmg` and drag **SetDate** into your Applications folder.
 3. **First launch only:** right-click (or Control-click) SetDate in Applications and choose **Open**, then click **Open** in the dialog that appears. After that, it opens normally on a double-click.
 
@@ -38,10 +38,10 @@ npm test
 ```
 npm run dist       # Apple Silicon .dmg only -- the quick local build
 npm run dist:mac   # both .dmgs, as the release workflow builds them
-npm run dist:win   # Windows .exe installer (run on Windows)
+npm run dist:win   # Windows .exe installer (works on macOS too)
 ```
 
-The two macOS builds run as separate electron-builder invocations so each can name its own artifact (`SetDate-<version>-Apple-Silicon.dmg` / `-Intel.dmg`). electron-builder's `${arch}` macro only expands to `arm64`/`x64`, and it omits the suffix entirely for x64, which left the Intel build looking like the default download.
+Releases are named `SetDate-<version>-apple-silicon.dmg`, `-apple-intel.dmg`, and `-windows-setup.exe`. The two macOS builds run as separate electron-builder invocations because each needs its own `artifactName`: the `${arch}` macro only expands to `arm64`/`x64`, and electron-builder omits the suffix entirely for x64, which left the Intel build looking like the default download.
 
 Output lands in `dist/`. macOS builds are re-signed ad-hoc by `scripts/after-pack.js`, which then verifies the signature and fails the build if it doesn't match the bundle -- without that, macOS reports the app as damaged.
 

@@ -7,8 +7,8 @@
     "start": "electron .",
     "dist": "npm run dist:mac:silicon",
     "dist:mac": "npm run dist:mac:silicon && npm run dist:mac:intel",
-    "dist:mac:silicon": "electron-builder --mac dmg --arm64 --publish never -c.mac.artifactName='${productName}-${version}-Apple-Silicon.${ext}'",
-    "dist:mac:intel": "electron-builder --mac dmg --x64 --publish never -c.mac.artifactName='${productName}-${version}-Intel.${ext}'",
+    "dist:mac:silicon": "electron-builder --mac dmg --arm64 --publish never -c.mac.artifactName='${productName}-${version}-apple-silicon.${ext}'",
+    "dist:mac:intel": "electron-builder --mac dmg --x64 --publish never -c.mac.artifactName='${productName}-${version}-apple-intel.${ext}'",
     "dist:win": "electron-builder --win nsis --x64 --publish never",
     "test": "npx playwright test"
   },
@@ -22,7 +22,8 @@
       "identity": null
     },
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "artifactName": "${productName}-${version}-windows-setup.${ext}"
     },
     "files": [
       "main.js",

@@ -24,6 +24,7 @@ There's no good free open-source tool for this. Existing options are paid, overl
 - `lib/exif.js` -- exiftool-vendored wrapper (file resolution, date read/write)
 - `renderer/` -- index.html, style.css, app.js (all vanilla, no build step)
 - `e2e/` -- Playwright tests
+- `build/` -- `icon.icns` / `icon.ico`, picked up by electron-builder *by convention* (no `package.json` reference), so don't move or rename them.
 
 **IPC surface** (all `ipcMain.handle` / `ipcRenderer.invoke`):
 - `pick-files` -- opens native file/folder picker, returns paths

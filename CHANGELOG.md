@@ -4,9 +4,13 @@ All notable changes to SetDate are documented here. Versions follow [semantic ve
 
 ## Unreleased
 
+### Added
+
+- App icon: a calendar page framing a photo, which is roughly what the app does.
+
 ### Changed
 
-- macOS downloads are now named `SetDate-<version>-Apple-Silicon.dmg` and `SetDate-<version>-Intel.dmg`. Previously the Intel build was just `SetDate-<version>.dmg`, with no architecture in the name at all, so it read as the default choice for everyone -- an easy way to end up running the Intel build under Rosetta on an M-series Mac.
+- Every download now names its platform: `SetDate-<version>-apple-silicon.dmg`, `SetDate-<version>-apple-intel.dmg`, and `SetDate-<version>-windows-setup.exe`. Previously the Intel build was just `SetDate-<version>.dmg`, with no architecture in the name at all, so it read as the default choice for everyone -- an easy way to end up running the Intel build under Rosetta on an M-series Mac. The Windows installer was `SetDate Setup <version>.exe`, whose spaces made for awkward URLs.
 
 ## [1.1.0] -- 2026-08-02
 
