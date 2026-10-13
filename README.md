@@ -47,14 +47,13 @@ Output lands in `dist/`. macOS builds are re-signed ad-hoc by `scripts/after-pac
 
 ## Releasing
 
-Push a version tag to build both platforms and open a draft GitHub Release:
+Bump `version` in `package.json` (`npm version minor --no-git-tag-version`), promote the CHANGELOG's Unreleased section to that version, then commit and push. Then:
 
 ```
-npm version minor      # bumps package.json and creates the tag
-git push && git push --tags
+bash scripts/release.sh
 ```
 
-Review and smoke-test the attached artifacts, then publish the draft. See [.github/workflows/release.yml](.github/workflows/release.yml).
+It refuses unless you're on main with a clean tree matching `origin/main`, the version isn't already tagged, and the CHANGELOG has its entry. It runs the tests, asks for confirmation, then creates the tag on GitHub, which triggers [.github/workflows/release.yml](.github/workflows/release.yml) to build every platform and publish the release. The script watches that run and prints the release URL. Builds happen in CI because npm only installs the exiftool binary for the current OS, so a Windows build made on macOS would ship without it.
 
 ## Make your own
 
